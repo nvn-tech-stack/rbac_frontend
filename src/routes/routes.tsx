@@ -1,10 +1,4 @@
-import {
-  Navigate,
-  Outlet,
-  useNavigate,
-  useParams,
-  useSearchParams,
-} from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import Dashboard from "../pages/Admin/Dashboard";
 import Login from "../pages/Login";
 import { useEffect } from "react";
