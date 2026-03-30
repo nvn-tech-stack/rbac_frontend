@@ -1,0 +1,31 @@
+.box-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  height: 100vh;
+  align-items: center;
+}
+
+.login {
+  background: linear-gradient(
+    135deg,
+    rgb(4, 7, 11),
+    rgb(9, 5, 6),
+    rgb(88, 10, 23)
+  );
+}
+
+@media (max-width: 768px) {
+  .login {
+    width: 100vh;
+  }
+}
+input[type="password"]::-ms-reveal {
+  display: none;
+}
+
+.menu {
+  color: black;
+  font-size: 25px;
+  cursor: pointer;
+}
