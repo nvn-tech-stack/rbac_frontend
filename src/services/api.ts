@@ -51,7 +51,7 @@ export const postApi = (url: string, config?: { data?: any; params?: any }) => {
 
 export const putApi = (url: string, config?: { data?: any; params?: any }) => {
   return api
-    .post(url, config?.data, { params: config?.params })
+    .put(url, config?.data, { params: config?.params })
     .then((res) => res.data);
 };
 export const deleteApi = (

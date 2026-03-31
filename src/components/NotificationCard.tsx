@@ -1,12 +1,31 @@
 import { Card, Box, Typography, Avatar } from "@mui/material";
+import { formatDistanceToNow } from "date-fns";
+import { useNotification } from "../hooks/notification";
 
 type NotificationCardProps = {
   notificatonRead: boolean;
+  id: string;
+  title: string;
+  description: string;
+  createdAt: string;
+  userName: string;
 };
 
-const NotificationCard = ({ notificatonRead }: NotificationCardProps) => {
+const NotificationCard = ({
+  notificatonRead,
+  description,
+  createdAt,
+  userName,
+  id,
+}: NotificationCardProps) => {
+  const notificationTime = formatDistanceToNow(new Date(createdAt), {
+    addSuffix: true,
+  });
+  const { handleReadNotifications } = useNotification();
+
   return (
     <Card
+      onClick={() => handleReadNotifications(id)}
       sx={{
         p: 2,
         mb: 1.5,
@@ -17,14 +36,16 @@ const NotificationCard = ({ notificatonRead }: NotificationCardProps) => {
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-        <Avatar sx={{ width: 30, height: 30 }}>A</Avatar>
+        <Avatar sx={{ width: 30, height: 30 }}>
+          {userName?.charAt(0).toUpperCase() || "N/A"}
+        </Avatar>
         <Box sx={{ flex: 1 }}>
           <Typography variant="body2" fontWeight={500}>
-            Admin added a new user
+            {description}
           </Typography>
 
           <Typography variant="caption" color="gray">
-            2 minutes ago
+            {notificationTime}
           </Typography>
         </Box>
       </Box>

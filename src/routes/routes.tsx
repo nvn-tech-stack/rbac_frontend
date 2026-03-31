@@ -3,11 +3,7 @@ import Dashboard from "../pages/Admin/Dashboard";
 import Login from "../pages/Login";
 import { useEffect } from "react";
 import { baseURL } from "../services/api";
-import {
-  getAccessToken,
-  getRefreshToken,
-  setLsUser,
-} from "../utils/localStorage";
+import { setLsUser } from "../utils/localStorage";
 
 import { useAuth } from "../hooks/auth";
 import { getUserByToken } from "../services/user";
@@ -48,19 +44,6 @@ const OauthSuccess = () => {
     if (user) {
       setUser(user?.results);
       setLsUser(user?.results);
-
-      const accessToken = getAccessToken();
-      const userInfo = localStorage.getItem("user");
-      const refreshToken = getRefreshToken();
-
-      console.log(
-        "Access Token:",
-        accessToken,
-        "userInfo",
-        userInfo,
-        "Refresh Token:",
-        refreshToken,
-      );
 
       navigate("/admin", { replace: true });
     }

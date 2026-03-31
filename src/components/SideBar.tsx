@@ -118,7 +118,9 @@ const Sidebar = ({ open, toggleDrawer, user }: SidebarProps) => {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ width: 35, height: 35, mr: open ? 1.5 : 0 }}>N</Avatar>
+          <Avatar sx={{ width: 35, height: 35, mr: open ? 1.5 : 0 }}>
+            {user?.first_name?.charAt(0).toUpperCase() || "N/A"}
+          </Avatar>
 
           {open && (
             <Box sx={{ flexGrow: 1 }}>

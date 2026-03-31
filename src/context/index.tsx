@@ -1,5 +1,6 @@
 import { AuthContextProvider } from "../hooks/auth";
 import { ToastProvider } from "../hooks/Toast";
+import { NotificationProvider } from "../hooks/notification";
 import { Outlet } from "react-router-dom";
 
 export default function ContextContainer() {
@@ -7,7 +8,9 @@ export default function ContextContainer() {
     <>
       <ToastProvider>
         <AuthContextProvider>
-          <Outlet />
+          <NotificationProvider>
+            <Outlet />
+          </NotificationProvider>
         </AuthContextProvider>
       </ToastProvider>
     </>

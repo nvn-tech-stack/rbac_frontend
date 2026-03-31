@@ -1,7 +1,7 @@
 import { Button, Modal, Box, Typography } from "@mui/material";
 import NotificationCard from "./NotificationCard";
-import { useState } from "react";
-import { Height } from "@mui/icons-material";
+
+import { useNotification } from "../hooks/notification";
 
 const style = {
   position: "absolute",
@@ -25,7 +25,7 @@ function NotificationModal({
   openNotification,
   handleCloseNotification,
 }: NotificationProps) {
-  const [notificatonRead] = useState<boolean>(false);
+  const { notifications } = useNotification();
 
   return (
     <div>
@@ -59,97 +59,23 @@ function NotificationModal({
               maxHeight: "600px",
             }}
           >
-            <NotificationCard notificatonRead={notificatonRead} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
-            <NotificationCard notificatonRead={true} />
+            {notifications?.length > 0 ? (
+              notifications?.map((notification: any) => (
+                <NotificationCard
+                  key={notification._id}
+                  id={notification._id}
+                  notificatonRead={notification.is_read}
+                  title={notification.title}
+                  description={notification.description}
+                  createdAt={notification.createdAt}
+                  userName={notification.user?.first_name}
+                />
+              ))
+            ) : (
+              <Typography variant="body2">
+                No notifications available.
+              </Typography>
+            )}
           </Box>
         </Box>
       </Modal>

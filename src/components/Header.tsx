@@ -3,14 +3,22 @@ import { useState } from "react";
 import { AppBar, Box, Toolbar } from "@mui/material";
 import NotificationsSharpIcon from "@mui/icons-material/NotificationsSharp";
 import NotificationModal from "./NotificationModal";
- import MenuModal from "./MenuModal";
-
+import MenuModal from "./MenuModal";
+import { useNotification } from "../hooks/notification";
+ 
 
 const Header = () => {
   const [openNotification, setOpenNotification] = useState(false);
+ 
+ const { hasUnread } = useNotification();
 
-  const handleOpenNotification = () => setOpenNotification(true);
+  const handleOpenNotification = () => {
+    setOpenNotification(true);
+   
+  };
   const handleCloseNotification = () => setOpenNotification(false);
+   
+
   return (
     <div>
       <AppBar
@@ -26,7 +34,7 @@ const Header = () => {
               alignItems: "center",
               position: "relative",
               cursor: "pointer",
-              marginRight:2
+              marginRight: 2,
             }}
           >
             <span
@@ -36,7 +44,7 @@ const Header = () => {
                 right: 2,
                 width: 8,
                 height: 8,
-                background: "red",
+                background: hasUnread ? "red" : "none",
                 borderRadius: "50%",
               }}
             ></span>
@@ -53,7 +61,8 @@ const Header = () => {
               openNotification={openNotification}
             />
           </Box>
-         <MenuModal/>
+
+          <MenuModal />
         </Toolbar>
       </AppBar>
     </div>
