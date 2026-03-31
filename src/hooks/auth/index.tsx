@@ -3,7 +3,12 @@ import { createContext, useContext, useState, type ReactNode } from "react";
 
 import type { User } from "../../utils/interfaces";
 import { setToken, setLsUser, getUser } from "../../utils/localStorage";
-import { register, login } from "../../services/auth";
+import {
+  register,
+  login,
+  resendEmail,
+  forgotPassword,
+} from "../../services/auth";
 
 import { useToast } from "../Toast";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +19,8 @@ type AuthContextType = {
   mutateRegister: any;
   mutateLogin: any;
   isPending: boolean;
+  handleSendEmail: (config: any) => void;
+  handleForgotPassword: (config: any) => void;
 };
 const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -54,9 +61,53 @@ export const useAuthProvider = () => {
     },
   });
 
+  const { mutate: mutateResendEmail } = useMutation({
+    mutationFn: resendEmail,
+    onSuccess: () => {
+      showToast("Email sent successfully!", "success");
+    },
+    onError: (error: any) => {
+      const message = error?.response.data?.message || "Something went wrong!";
+      showToast(message, "error");
+    },
+  });
+
+  const handleSendEmail = (email: string) => {
+    mutateResendEmail({ data: { email } });
+  };
+
+  const { mutate: mutateForgotPassword } = useMutation({
+    mutationFn: forgotPassword,
+    onSuccess: () => {
+      showToast("Password changed successfully!", "success");
+    },
+    onError: (error: any) => {
+      const message = error?.response.data?.message || "Something went wrong!";
+      showToast(message, "error");
+    },
+  });
+
+  const handleForgotPassword = ({
+    token,
+    newPassword,
+  }: {
+    token: string;
+    newPassword: string;
+  }) => {
+    mutateForgotPassword({ data: { newPassword }, params: { token } });
+  };
+
   const isPending = isLoginPending || isRegisterPending;
 
-  return { user, mutateRegister, mutateLogin, setUser, isPending };
+  return {
+    user,
+    mutateRegister,
+    mutateLogin,
+    setUser,
+    isPending,
+    handleSendEmail,
+    handleForgotPassword,
+  };
 };
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {

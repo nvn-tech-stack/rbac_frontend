@@ -5,15 +5,15 @@ import {
   TextField,
   Typography,
   InputAdornment,
-  Link,
   IconButton,
+  Link,
 } from "@mui/material";
 
 import { FcGoogle } from "react-icons/fc";
 
 import { RiEyeCloseLine } from "react-icons/ri";
 import { BsEye } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
 import type { SignUp } from "../utils/interfaces.ts";
 import { signup } from "../utils/initialValues";
@@ -101,9 +101,7 @@ const Signup = () => {
 
           <Typography align="center" sx={{ mt: 1, mb: 3 }}>
             Already have an account?{" "}
-            <Link href="#" onClick={handleLogin} underline="hover">
-              {!isLogin ? "Log in" : "Sign up"}
-            </Link>
+            <Link onClick={handleLogin}>{!isLogin ? "Log in" : "Sign up"}</Link>
           </Typography>
 
           {!isLogin && (
@@ -211,7 +209,13 @@ const Signup = () => {
 
           <Box display="flex" alignItems="flex-start" mt={2}>
             <Typography variant="body2">
-              <Link href="#">Forgot Password</Link>
+              <Link
+                component={RouterLink}
+                to="/forgot-password"
+                color="primary"
+              >
+                Forgot Password?
+              </Link>
             </Typography>
           </Box>
 

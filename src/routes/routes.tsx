@@ -8,6 +8,8 @@ import { setLsUser } from "../utils/localStorage";
 import { useAuth } from "../hooks/auth";
 import { getUserByToken } from "../services/user";
 import { useQuery } from "@tanstack/react-query";
+import ForgotPassword from "../components/ForgotPassword";
+import ResetPassword from "../components/ResetPassword";
 
 const OauthRedirect = () => {
   const { provider, user } = useParams();
@@ -96,5 +98,17 @@ export const publicRoutes = [
     name: "oauth-success",
     path: "oauth-success",
     element: <OauthSuccess />,
+  },
+  {
+    id: 4,
+    name: "forgot-password",
+    path: "forgot-password",
+    element: <ForgotPassword />,
+  },
+  {
+    id: 5,
+    name: "reset-password",
+    path: "reset-password",
+    element: <ResetPassword />,
   },
 ];
