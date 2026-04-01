@@ -16,6 +16,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import GroupIcon from "@mui/icons-material/Group";
+import { BsChatLeftText } from "react-icons/bs";
 
 import Logo from "./Logo";
 import { Link } from "react-router-dom";
@@ -84,7 +85,15 @@ const Sidebar = ({ open, toggleDrawer, user }: SidebarProps) => {
               </ListItemIcon>
 
               {open && (
-                <ListItemText sx={{ marginLeft: -3 }} primary="Dashboard" />
+                <ListItemText
+                  sx={{
+                    marginLeft: -3,
+                    "& .MuiTypography-root": {
+                      fontSize: "14px",
+                    },
+                  }}
+                  primary="Dashboard"
+                />
               )}
             </ButtonStyled>
           </Link>
@@ -99,8 +108,35 @@ const Sidebar = ({ open, toggleDrawer, user }: SidebarProps) => {
 
               {open && (
                 <ListItemText
-                  sx={{ marginLeft: -3 }}
+                  sx={{
+                    marginLeft: -3,
+                    "& .MuiTypography-root": {
+                      fontSize: "14px",
+                    },
+                  }}
                   primary="User Management"
+                />
+              )}
+            </ButtonStyled>
+          </Link>
+          <Link
+            to="Chats"
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <ButtonStyled>
+              <ListItemIcon>
+                <BsChatLeftText style={{ color: "white" }} fontSize="medium" />
+              </ListItemIcon>
+
+              {open && (
+                <ListItemText
+                  sx={{
+                    marginLeft: -3,
+                    "& .MuiTypography-root": {
+                      fontSize: "15px",
+                    },
+                  }}
+                  primary="Chats"
                 />
               )}
             </ButtonStyled>

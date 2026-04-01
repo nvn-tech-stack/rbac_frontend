@@ -32,7 +32,9 @@ api.interceptors.response.use(
     toast.error("Something went wrong.");
 
     if (status === 500) {
-      window.location.href = "/server-error";
+      if (window.location.pathname !== "/server-error") {
+        window.location.href = "/server-error";
+      }
     }
 
     return Promise.reject(error);

@@ -16,4 +16,7 @@ export interface User {
     name: string;
     type: string;
   };
+  last_sign_in: any;
+  status: string;
+  phone:string
 }

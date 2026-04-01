@@ -27,7 +27,7 @@ const RootLayout = () => {
           <Sidebar open={open} toggleDrawer={toggleDrawer} user={user} />
         </div>
 
-        <Box sx={{ mt: 8, ml: 1, mr: 5, width: "100%" }}>
+        <Box sx={{ mt: 6, ml: 2, mr: 2, width: "100%" }}>
           <Outlet />
         </Box>
       </StyleContainer>

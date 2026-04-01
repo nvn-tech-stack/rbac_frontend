@@ -5,19 +5,16 @@ import NotificationsSharpIcon from "@mui/icons-material/NotificationsSharp";
 import NotificationModal from "./NotificationModal";
 import MenuModal from "./MenuModal";
 import { useNotification } from "../hooks/notification";
- 
 
 const Header = () => {
   const [openNotification, setOpenNotification] = useState(false);
- 
- const { hasUnread } = useNotification();
+
+  const { hasUnread } = useNotification();
 
   const handleOpenNotification = () => {
     setOpenNotification(true);
-   
   };
   const handleCloseNotification = () => setOpenNotification(false);
-   
 
   return (
     <div>
@@ -25,7 +22,10 @@ const Header = () => {
         position="fixed"
         sx={{
           backgroundColor: "white",
+          height: 60,
+          borderBottom: "1px solid #ded8d8",
         }}
+        elevation={0}
       >
         <Toolbar sx={{ justifyContent: "flex-end" }}>
           <Box

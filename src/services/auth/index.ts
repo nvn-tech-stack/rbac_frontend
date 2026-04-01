@@ -1,12 +1,12 @@
 import { API } from "..";
 import { postApi } from "../api";
 
-export const login = (config: any) => {
-  return postApi(`${API.auth}/login`, config);
+export const login = async (config: any) => {
+  return await postApi(`${API.auth}/login`, config);
 };
 
-export const register = (config: any) => {
-  return postApi(`${API.auth}/register`, config);
+export const register = async (config: any) => {
+  return await postApi(`${API.auth}/register`, config);
 };
 
 export const forgotPassword = async (config: any) => {
