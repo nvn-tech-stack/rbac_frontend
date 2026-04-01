@@ -18,7 +18,7 @@ export default function CommonTabs({ tabs }: SimpleTabsProps) {
     <Box width="100%">
       <Tabs
         value={tabValue}
-        onChange={(e, newValue) => setTabValue(newValue)}
+        onChange={(_e, newValue) => setTabValue(newValue)}
         sx={{
           borderBottom: 1,
           borderColor: "divider",
