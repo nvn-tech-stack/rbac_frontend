@@ -29,7 +29,6 @@ export const useUserManagementProvider = () => {
 
   const { user } = useAuth();
   const queryClient = useQueryClient();
-  console.log("user page", UserPage);
 
   const { data: users = [], isLoading } = useQuery({
     queryKey: ["users", user?._id, UserPage, UserLimit],

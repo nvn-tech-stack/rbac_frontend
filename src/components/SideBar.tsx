@@ -43,7 +43,7 @@ const ButtonStyled = styled(ListItemButton)({
 });
 
 const Sidebar = ({ open, toggleDrawer, user }: SidebarProps) => {
-  console.log("User ::--->", user);
+
   return (
     <Drawer
       variant="permanent"
