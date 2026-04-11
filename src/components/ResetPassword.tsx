@@ -11,7 +11,7 @@ import { useAuth } from "../hooks/auth";
 import { Controller, useForm } from "react-hook-form";
 import type { SignUp } from "../utils/interfaces";
 import { signup } from "../utils/initialValues";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { BsEye } from "react-icons/bs";
 import { RiEyeCloseLine } from "react-icons/ri";
 import { useState } from "react";
@@ -47,10 +47,11 @@ export default function ResetPassword() {
   const { handleForgotPassword } = useAuth();
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
+  if (token) {
+    localStorage.setItem("access_token", token);
+  }
 
   const onSubmit = async (data: SignUp) => {
-    console.log("Token ::--->", token);
-    console.log("Data ::--->", data);
     await handleForgotPassword({ token, newPassword: data.password });
     reset();
   };
@@ -127,6 +128,20 @@ export default function ResetPassword() {
             >
               Update Password
             </Button>
+            <Link to="/auth">
+              <Typography
+                sx={{
+                  textDecoration: "underline",
+                  color: "blue",
+                  textAlign: "center",
+                  marginTop: 3,
+                  cursor: "pointer",
+                }}
+                variant="body1"
+              >
+                Login
+              </Typography>
+            </Link>
           </FormBox>
         </form>
       </ContainerBox>

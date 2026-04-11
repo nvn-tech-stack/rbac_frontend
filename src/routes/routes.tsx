@@ -11,8 +11,9 @@ import { useQuery } from "@tanstack/react-query";
 import ForgotPassword from "../components/ForgotPassword";
 import ResetPassword from "../components/ResetPassword";
 import UserManagement from "../pages/Admin/UserManagement";
-import CreateUser from "../components/user-management/CreateUser";
-import CreateRole from "../components/user-management/CreateRole";
+
+import CreateRoleAndUpdate from "../components/user-management/CreateRoleAndUpdate";
+import CreateUserAndUpdate from "../components/user-management/CreateUserAndUpdate";
 
 const OauthRedirect = () => {
   const { provider, user } = useParams();
@@ -82,21 +83,33 @@ export const adminRoutes = [
   },
   {
     id: 4,
-    name: "user-management",
+    name: "new-user",
     path: "user-management/new-user",
-    element: <CreateUser />,
+    element: <CreateUserAndUpdate />,
   },
   {
     id: 5,
-    name: "user-management",
+    name: "new-role",
     path: "user-management/new-role",
-    element: <CreateRole />,
+    element: <CreateRoleAndUpdate />,
   },
   {
     id: 6,
     name: "chats",
     path: "chats",
     element: <h1 style={{ marginTop: "15px" }}>Comming soon users chats</h1>,
+  },
+  {
+    id: 7,
+    name: "role-update",
+    path: "/admin/user-management/role-update/:roleId",
+    element: <CreateRoleAndUpdate />,
+  },
+  {
+    id: 8,
+    name: "user-update",
+    path: "/admin/user-management/user-update/:userId",
+    element: <CreateUserAndUpdate />,
   },
 ];
 

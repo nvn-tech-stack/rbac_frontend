@@ -21,11 +21,13 @@ import { signup } from "../utils/initialValues";
 import { useState } from "react";
 import { enumOfRoles } from "../utils/enums.ts";
 import { useAuth } from "../hooks/auth/index.tsx";
+import { useToast } from "../hooks/Toast.tsx";
 
 const Signup = () => {
   const { mutateRegister, mutateLogin } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [isLogin, setLogin] = useState(true);
+  const showToast = useToast();
 
   const navigate = useNavigate();
 
@@ -41,34 +43,65 @@ const Signup = () => {
 
   const handleLogin = () => {
     setLogin((prev) => !prev);
+    reset();
   };
+
   const handleGoogleLogin = () => {
     navigate("/oauth/google/admin");
   };
   const onSubmit = async (data: SignUp) => {
     try {
       if (isLogin) {
-        mutateLogin({
-          data: {
-            email: data.email,
-            password: data.password,
+        mutateLogin(
+          {
+            data: {
+              email: data.email,
+              password: data.password,
+            },
+            params: {
+              type: enumOfRoles.ADMIN,
+            },
           },
-          params: {
-            type: enumOfRoles.ADMIN,
+          {
+            onSuccess: () => {
+              showToast("login successfully", "success");
+              reset();
+            },
+            onError: (error: any) => {
+              const message =
+                error?.response.data?.message || "Something went wrong!";
+              showToast(message, "error");
+            },
           },
-        });
+        );
       } else {
-        mutateRegister({
-          data: {
-            first_name: data.first_name,
-            last_name: data.last_name,
-            email: data.email,
-            newPassword: data.password,
+        mutateRegister(
+          {
+            data: {
+              first_name: data.first_name,
+              last_name: data.last_name,
+              email: data.email,
+              newPassword: data.password,
+            },
+            params: {
+              type: enumOfRoles.ADMIN,
+            },
           },
-          params: {
-            type: enumOfRoles.ADMIN,
+          {
+            onSuccess: () => {
+              showToast(
+                "Registered successfully, Please login now!",
+                "success",
+              );
+              reset();
+            },
+            onError: (error: any) => {
+              const message =
+                error?.response.data?.message || "Something went wrong!";
+              showToast(message, "error");
+            },
           },
-        });
+        );
         reset();
       }
     } catch (error) {
@@ -88,10 +121,10 @@ const Signup = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Container
           sx={{
-            background: "#fff",
-            borderRadius: 4,
+            background: "#eceef4",
+
             p: 5,
-            boxShadow: 5,
+
             width: 450,
           }}
         >
@@ -117,7 +150,8 @@ const Signup = () => {
                 <TextField
                   {...field}
                   fullWidth
-                  label="First name*"
+                  variant="standard"
+                  placeholder="First name"
                   margin="normal"
                   helperText={error ? error.message : null}
                   error={!!error}
@@ -134,7 +168,8 @@ const Signup = () => {
                 <TextField
                   {...field}
                   fullWidth
-                  label="Last name"
+                  variant="standard"
+                  placeholder="Last name"
                   margin="normal"
                   helperText={error ? error.message : null}
                   error={!!error}
@@ -157,8 +192,10 @@ const Signup = () => {
               <TextField
                 {...field}
                 fullWidth
-                label="Email address*"
+                // label="Email address*"
+                placeholder="Email"
                 margin="normal"
+                variant="standard"
                 helperText={error ? error.message : null}
                 error={!!error}
               />
@@ -184,7 +221,8 @@ const Signup = () => {
               <TextField
                 {...field}
                 fullWidth
-                label="Password (8+ characters)*"
+                variant="standard"
+                placeholder="Password"
                 type={showPassword ? "text" : "password"}
                 margin="normal"
                 error={!!error}

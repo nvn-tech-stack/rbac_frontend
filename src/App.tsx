@@ -1,12 +1,35 @@
 import "./App.css";
 
-import { RouterProvider } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
+import ContextContainer from "./context";
+import { checkTokenExpire } from "./services/auth";
+import { useQuery } from "@tanstack/react-query";
+import { clearToken, getAccessToken } from "./utils/localStorage";
 
- 
-import AppRouter from "./routes";
+export default function App() {
+  const token = getAccessToken();
 
-function App() {
-  return <RouterProvider router={AppRouter} />;
+  const { isError: isNotValid } = useQuery({
+    queryKey: ["verify-token"],
+    queryFn: checkTokenExpire,
+    enabled: !!token,
+  });
+
+  // if (!navigator?.onLine) {
+  //   return <h1>No internet</h1>;
+  // }
+
+  if (isNotValid) {
+    console.log("insider call APP")
+    clearToken();
+    return <Navigate to="/auth" replace />;
+  }
+
+  return (
+    <>
+      <ContextContainer>
+        <Outlet />
+      </ContextContainer>
+    </>
+  );
 }
-
-export default App;

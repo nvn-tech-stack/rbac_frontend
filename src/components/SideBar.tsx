@@ -22,6 +22,8 @@ import Logo from "./Logo";
 import { Link } from "react-router-dom";
 import type { User } from "../utils/interfaces";
 
+import { useUserManagement } from "../hooks/user-management";
+
 interface SidebarProps {
   open: boolean;
   toggleDrawer: () => void;
@@ -43,6 +45,7 @@ const ButtonStyled = styled(ListItemButton)({
 });
 
 const Sidebar = ({ open, toggleDrawer, user }: SidebarProps) => {
+  const { roleInfo, modulePermissions } = useUserManagement();
 
   return (
     <Drawer
@@ -97,50 +100,124 @@ const Sidebar = ({ open, toggleDrawer, user }: SidebarProps) => {
               )}
             </ButtonStyled>
           </Link>
-          <Link
-            to="user-management"
-            style={{ textDecoration: "none", color: "inherit" }}
-          >
-            <ButtonStyled>
-              <ListItemIcon>
-                <GroupIcon sx={{ color: "white" }} fontSize="medium" />
-              </ListItemIcon>
 
-              {open && (
-                <ListItemText
-                  sx={{
-                    marginLeft: -3,
-                    "& .MuiTypography-root": {
-                      fontSize: "14px",
-                    },
-                  }}
-                  primary="User Management"
-                />
-              )}
-            </ButtonStyled>
-          </Link>
-          <Link
-            to="Chats"
-            style={{ textDecoration: "none", color: "inherit" }}
-          >
-            <ButtonStyled>
-              <ListItemIcon>
-                <BsChatLeftText style={{ color: "white" }} fontSize="medium" />
-              </ListItemIcon>
+          {modulePermissions.length === 0 &&
+            roleInfo?.name === "Admin" &&
+            roleInfo?.type === "admin" && (
+              <>
+                <Link
+                  to="user-management"
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  <ButtonStyled>
+                    <ListItemIcon>
+                      <GroupIcon sx={{ color: "white" }} fontSize="medium" />
+                    </ListItemIcon>
 
-              {open && (
-                <ListItemText
-                  sx={{
-                    marginLeft: -3,
-                    "& .MuiTypography-root": {
-                      fontSize: "15px",
-                    },
-                  }}
-                  primary="Chats"
-                />
-              )}
-            </ButtonStyled>
-          </Link>
+                    {open && (
+                      <ListItemText
+                        sx={{
+                          marginLeft: -3,
+                          "& .MuiTypography-root": {
+                            fontSize: "14px",
+                          },
+                        }}
+                        primary="User Management"
+                      />
+                    )}
+                  </ButtonStyled>
+                </Link>
+                <Link
+                  to="Chats"
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  <ButtonStyled>
+                    <ListItemIcon>
+                      <BsChatLeftText
+                        style={{ color: "white" }}
+                        fontSize="medium"
+                      />
+                    </ListItemIcon>
+
+                    {open && (
+                      <ListItemText
+                        sx={{
+                          marginLeft: -3,
+                          "& .MuiTypography-root": {
+                            fontSize: "15px",
+                          },
+                        }}
+                        primary="Chats"
+                      />
+                    )}
+                  </ButtonStyled>
+                </Link>
+              </>
+            )}
+
+          {modulePermissions &&
+            modulePermissions.length > 0 &&
+            modulePermissions.map((perm: any) => {
+              return (
+                <>
+                  {perm.is_view && perm.module.name === "User Management" && (
+                    <Link
+                      to="user-management"
+                      style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                      <ButtonStyled>
+                        <ListItemIcon>
+                          <GroupIcon
+                            sx={{ color: "white" }}
+                            fontSize="medium"
+                          />
+                        </ListItemIcon>
+
+                        {open && (
+                          <ListItemText
+                            sx={{
+                              marginLeft: -3,
+                              "& .MuiTypography-root": {
+                                fontSize: "14px",
+                              },
+                            }}
+                            primary="User Management"
+                          />
+                        )}
+                      </ButtonStyled>
+                    </Link>
+                  )}
+
+                  {perm.is_view && perm.module.name === "Chats" && (
+                    <Link
+                      to="Chats"
+                      style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                      <ButtonStyled>
+                        <ListItemIcon>
+                          <BsChatLeftText
+                            style={{ color: "white" }}
+                            fontSize="medium"
+                          />
+                        </ListItemIcon>
+
+                        {open && (
+                          <ListItemText
+                            sx={{
+                              marginLeft: -3,
+                              "& .MuiTypography-root": {
+                                fontSize: "15px",
+                              },
+                            }}
+                            primary="Chats"
+                          />
+                        )}
+                      </ButtonStyled>
+                    </Link>
+                  )}
+                </>
+              );
+            })}
         </List>
       </Box>
 

@@ -1,10 +1,11 @@
 import { Box } from "@mui/material";
-import CommonTabs from "../../components/CommonTabs";
+
 import Header from "../../components/user-management/Header";
 
 import UserTable from "../../components/user-management/UserTable";
 import RoleTable from "../../components/user-management/RoleTable";
 import { useUserManagement } from "../../hooks/user-management";
+import CommonTabs from "../../components/CommonTabs";
 
 export default function UserManagement() {
   const {
@@ -13,7 +14,7 @@ export default function UserManagement() {
     UserPage,
     handleChangePage,
     handleChangeRowsPerPage,
-    totalsUserResults
+    totalsUserResults,
   } = useUserManagement();
   const tabs = [
     {
@@ -35,7 +36,6 @@ export default function UserManagement() {
     {
       label: "Role",
       content: (
-        
         <>
           <Header labelName="Role" />,
           <RoleTable />
