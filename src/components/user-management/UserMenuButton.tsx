@@ -1,5 +1,5 @@
 import { Menu, MenuItem } from "@mui/material";
-import React from "react";
+
 import { useNavigate } from "react-router-dom";
 import { useUserManagement } from "../../hooks/user-management";
 import { useToast } from "../../hooks/Toast";
