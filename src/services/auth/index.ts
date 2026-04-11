@@ -1,5 +1,5 @@
 import { API } from "..";
-import { postApi } from "../api";
+import { getApi, postApi } from "../api";
 
 export const login = async (config: any) => {
   return await postApi(`${API.auth}/login`, config);
@@ -19,4 +19,8 @@ export const resetPassword = (config: any) => {
 
 export const resendEmail = async (config: any) => {
   return await postApi(`${API.auth}/resend-email`, config);
+};
+
+export const checkTokenExpire = async () => {
+  return await getApi(`${API.auth}/verify-token`);
 };

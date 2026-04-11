@@ -13,14 +13,13 @@ const Login = () => {
     <div className="login">
       <div className="box-container">
         <LeftBox>
-          <Typography variant="h3" fontWeight={600} color="white">
+          <Typography variant="h3" fontWeight={600}>
             Welcome <span style={{ color: "#ff0000" }}>Back</span>
           </Typography>
 
           <Typography
             variant="h6"
             sx={{ mt: 4, mb: 2, fontWeight: 500, width: "500px" }}
-            color="white"
           >
             Sign in to your account to access your dashboard. manage your data,
             and continue your work securely.

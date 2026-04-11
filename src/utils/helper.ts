@@ -27,6 +27,13 @@ export const getStatusStyle = (status: string) => {
       color: "white",
     };
   }
+  else if (!status) {
+    return {
+      ...baseStyle,
+      backgroundColor: "Black",
+      color: "white",
+    };
+  }
 };
 
 export const formatDateTime = (date: any) =>

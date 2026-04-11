@@ -40,7 +40,6 @@ export const useAuthProvider = () => {
       console.log("AuthContextProvider userData", userData);
       setLsUser(userData);
       setUser(userData);
-      showToast("login successfully", "success");
       navigate("/admin", { replace: true });
     },
     onError: (error: any) => {
@@ -52,13 +51,8 @@ export const useAuthProvider = () => {
 
   const { mutate: mutateRegister, isPending: isRegisterPending } = useMutation({
     mutationFn: register,
-    onSuccess: () => {
-      showToast("Registered successfully, Please login now!", "success");
-    },
-    onError: (error: any) => {
-      const message = error?.response.data?.message || "Something went wrong!";
-      showToast(message, "error");
-    },
+    onSuccess: () => {},
+    onError: () => {},
   });
 
   const { mutate: mutateResendEmail } = useMutation({
@@ -79,7 +73,7 @@ export const useAuthProvider = () => {
   const { mutate: mutateForgotPassword } = useMutation({
     mutationFn: forgotPassword,
     onSuccess: () => {
-      showToast("Password changed successfully!", "success");
+      showToast("Password updated successfully!", "success");
     },
     onError: (error: any) => {
       const message = error?.response.data?.message || "Something went wrong!";
@@ -112,6 +106,7 @@ export const useAuthProvider = () => {
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const auth = useAuthProvider();
+
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 };
 

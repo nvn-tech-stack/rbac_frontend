@@ -15,8 +15,35 @@ export interface User {
   role: {
     name: string;
     type: string;
+    _id: string;
   };
   last_sign_in: any;
   status: string;
-  phone:string
+  phone: string;
+}
+
+export interface Module {
+  id: string;
+  _id: string;
+  name: string;
+  type: string;
+}
+
+export interface Role {
+  id: string;
+  _id: string;
+  name: string;
+  status: string;
+  type: string;
+}
+
+export interface Permission {
+  id: string;
+  _id: string;
+  module_id: string;
+  role_id: string;
+  is_view: boolean;
+  is_edit: boolean;
+  is_delete: boolean;
+  is_create: boolean;
 }

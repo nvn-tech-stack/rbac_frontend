@@ -1,18 +1,21 @@
 import { AuthContextProvider } from "../hooks/auth";
 import { ToastProvider } from "../hooks/Toast";
 import { NotificationProvider } from "../hooks/notification";
-import { Outlet } from "react-router-dom";
-import { UserManagementProvider } from "../hooks/user-management";
 
-export default function ContextContainer() {
+import { UserManagementProvider } from "../hooks/user-management";
+import type { ReactNode } from "react";
+
+type props = {
+  children: ReactNode;
+};
+
+export default function ContextContainer({ children }: props) {
   return (
     <>
       <ToastProvider>
         <AuthContextProvider>
           <NotificationProvider>
-            <UserManagementProvider>
-              <Outlet />
-            </UserManagementProvider>
+            <UserManagementProvider>{children}</UserManagementProvider>
           </NotificationProvider>
         </AuthContextProvider>
       </ToastProvider>

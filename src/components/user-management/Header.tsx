@@ -3,6 +3,10 @@ import { Box, styled } from "@mui/system";
 import { CiFilter } from "react-icons/ci";
 import { CiSearch } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
+import FilterModal from "./FilterModal";
+import { useEffect, useState } from "react";
+import { Controller, useForm, useWatch } from "react-hook-form";
+import { useUserManagement } from "../../hooks/user-management";
 
 const HeaderContianer = styled(Box)({
   display: "flex",
@@ -18,6 +22,14 @@ const SearchAndFilterContianer = styled(Box)({
 });
 
 function Header({ labelName }: { labelName: string }) {
+  const [filterOpen, setFilterOpen] = useState<boolean>(false);
+  const {
+    setRoleSearch,
+    setUserSearch,
+    tabValue,
+    modulePermissions,
+    roleInfo,
+  } = useUserManagement();
   const navigate = useNavigate();
   const handleOnOpenCreate = () => {
     if (labelName === "User") {
@@ -26,36 +38,105 @@ function Header({ labelName }: { labelName: string }) {
       navigate("/admin/user-management/new-role");
     }
   };
+
+  const handleCloseFilter = () => {
+    setFilterOpen((prev) => !prev);
+  };
+
+  const handleOpenFilter = () => {
+    setFilterOpen((prev) => !prev);
+  };
+
+  const { control, reset } = useForm({
+    mode: "all",
+  });
+
+  const searchValue = useWatch({
+    control,
+    name: "search",
+  });
+
+  useEffect(() => {
+    reset({ search: "" });
+
+    if (tabValue === 0) {
+      setUserSearch("");
+    } else if (tabValue === 1) {
+      setRoleSearch("");
+    }
+  }, [tabValue, setUserSearch, setRoleSearch, reset]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (tabValue === 0) {
+        console.log("searchValue", searchValue);
+        setUserSearch(searchValue);
+      } else if (tabValue === 1) {
+        setRoleSearch(searchValue);
+      }
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [searchValue, tabValue, setRoleSearch, setUserSearch]);
   return (
     <>
       <HeaderContianer>
         <SearchAndFilterContianer>
-          <TextField
-            type="text"
-            placeholder="Search..."
-            slotProps={{
-              input: {
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <CiSearch style={{ fontSize: 20 }} />
-                  </InputAdornment>
-                ),
-              },
-            }}
-            sx={{
-              width: 250,
-              "& .MuiInputBase-root": {
-                height: 35,
-                fontSize: 14,
-              },
-            }}
+          <Controller
+            name="search"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                type="text"
+                placeholder="Search..."
+                slotProps={{
+                  input: {
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <CiSearch style={{ fontSize: 20 }} />
+                      </InputAdornment>
+                    ),
+                  },
+                }}
+                sx={{
+                  width: 250,
+                  "& .MuiInputBase-root": {
+                    height: 35,
+                    fontSize: 14,
+                  },
+                }}
+              />
+            )}
           />
-          <CiFilter style={{ fontSize: 30, cursor: "pointer", margin: 3 }} />
+
+          <CiFilter
+            onClick={handleOpenFilter}
+            style={{ fontSize: 30, cursor: "pointer", margin: 3 }}
+          />
+          <FilterModal
+            handleCloseFilter={handleCloseFilter}
+            filterOpen={filterOpen}
+            setFilterOpen={setFilterOpen}
+          />
         </SearchAndFilterContianer>
         <Box>
-          <Button onClick={handleOnOpenCreate} variant="contained">
-            Add {labelName}
-          </Button>
+          {modulePermissions &&
+            modulePermissions.length > 0 &&
+            modulePermissions.map(
+              (p) =>
+                p.is_create &&
+                p.is_view && (
+                  <Button onClick={handleOnOpenCreate} variant="contained">
+                    Add {labelName}
+                  </Button>
+                ),
+            )}
+          {roleInfo?.name === "Admin" && roleInfo?.type === "admin" && (
+            <Button onClick={handleOnOpenCreate} variant="contained">
+              Add {labelName}
+            </Button>
+          )}
         </Box>
       </HeaderContianer>
       <Divider />

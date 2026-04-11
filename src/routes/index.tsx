@@ -6,7 +6,8 @@ import { adminRoutes, publicRoutes } from "./routes";
 
 import { useAuth } from "../hooks/auth";
 import { clearToken, getAccessToken } from "../utils/localStorage";
-import ContextContainer from "../context";
+
+import App from "../App";
 
 const RequireAuth = ({ allowedRoles }: { allowedRoles?: string[] }) => {
   const { user } = useAuth();
@@ -19,12 +20,14 @@ const RequireAuth = ({ allowedRoles }: { allowedRoles?: string[] }) => {
   if (allowedRoles && !allowedRoles.includes(user?.role?.type)) {
     return <Navigate to="/unauthorized" replace />;
   }
+
   return <Outlet />;
 };
 
 export const PublicRoute = () => {
   const { user } = useAuth();
   const token = getAccessToken();
+
   if (user && token) {
     return <Navigate to="/admin" replace />;
   }
@@ -33,7 +36,7 @@ export const PublicRoute = () => {
 
 const AppRouter = createBrowserRouter([
   {
-    element: <ContextContainer />,
+    element: <App />,
     children: [
       // public routes
       {

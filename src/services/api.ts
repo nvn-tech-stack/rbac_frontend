@@ -1,10 +1,11 @@
 import axios from "axios";
 
 import env from "../config/env";
-import toast from "react-hot-toast";
+import { QueryClient } from "@tanstack/react-query";
 
-import { getAccessToken } from "../utils/localStorage";
+import { clearToken, getAccessToken } from "../utils/localStorage";
 export const baseURL = env.API_URL;
+const queryClient = new QueryClient();
 
 const api = axios.create({
   baseURL: env.API_URL,
@@ -24,16 +25,20 @@ api.interceptors.request.use(
   (error) => Promise.reject(error),
 );
 
+let isLoggingOut = false;
+
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     const status = error?.response?.status;
 
-    toast.error("Something went wrong.");
+    if ((status === 401 || status === 403) && !isLoggingOut) {
+      isLoggingOut = true;
+      clearToken();
+      queryClient.clear();
 
-    if (status === 500) {
-      if (window.location.pathname !== "/server-error") {
-        window.location.href = "/server-error";
+      if (window.location.pathname !== "/auth") {
+        window.location.replace("/auth");
       }
     }
 
@@ -52,6 +57,7 @@ export const postApi = (url: string, config?: { data?: any; params?: any }) => {
 };
 
 export const putApi = (url: string, config?: { data?: any; params?: any }) => {
+  console.log("api data", config?.data);
   return api
     .put(url, config?.data, { params: config?.params })
     .then((res) => res.data);
