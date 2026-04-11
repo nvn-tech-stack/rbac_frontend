@@ -12,6 +12,7 @@ import { TablePagination } from "@mui/material";
 import { HiDotsVertical } from "react-icons/hi";
 import { useState } from "react";
 import RoleMenuButton from "./RoleMenuButton";
+import { useAuth } from "../../hooks/auth";
 
 export default function RoleTable() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -39,6 +40,7 @@ export default function RoleTable() {
     modulePermissions,
     roleInfo,
   } = useUserManagement();
+  const { user } = useAuth();
 
   if (isRoleLoading) {
     return <h1>Loading...</h1>;
@@ -71,6 +73,8 @@ export default function RoleTable() {
                 <TableRow
                   key={role._id}
                   sx={{
+                    background:
+                      role._id === user?.role?._id ? "#b9f8dbee" : "none",
                     "&:hover": {
                       backgroundColor: "#f5f5f5",
                       cursor: "pointer",
@@ -80,7 +84,7 @@ export default function RoleTable() {
                   <TableCell>{role.name}</TableCell>
                   <TableCell>
                     <span style={getStatusStyle(role.status)}>
-                      {role.status || "Owner"}
+                      {role.status}
                     </span>
                   </TableCell>
                   <TableCell></TableCell>
@@ -102,7 +106,14 @@ export default function RoleTable() {
                               <>
                                 <HiDotsVertical
                                   onClick={(e) => handleClickRoleMenu(e, role)}
-                                  style={{ fontSize: 20, cursor: "pointer" }}
+                                  style={{
+                                    fontSize: 20,
+                                    cursor: "pointer",
+                                    display:
+                                      role._id === user?.role?._id
+                                        ? "none"
+                                        : "",
+                                  }}
                                 />
                               </>
                             ),
@@ -113,7 +124,12 @@ export default function RoleTable() {
                           <>
                             <HiDotsVertical
                               onClick={(e) => handleClickRoleMenu(e, role)}
-                              style={{ fontSize: 20, cursor: "pointer" }}
+                              style={{
+                                fontSize: 20,
+                                cursor: "pointer",
+                                display:
+                                  role._id === user?.role?._id ? "none" : "",
+                              }}
                             />
                           </>
                         )}
