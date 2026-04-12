@@ -7,6 +7,7 @@ import FilterModal from "./FilterModal";
 import { useEffect, useState } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { useUserManagement } from "../../hooks/user-management";
+import { useToast } from "../../hooks/Toast";
 
 const HeaderContianer = styled(Box)({
   display: "flex",
@@ -29,9 +30,17 @@ function Header({ labelName }: { labelName: string }) {
     tabValue,
     modulePermissions,
     roleInfo,
+    roles,
   } = useUserManagement();
   const navigate = useNavigate();
+  const showToast = useToast();
+
   const handleOnOpenCreate = () => {
+    if (roles.length === 1 && labelName === "User") {
+      showToast("Please create a role first.", "info");
+      return;
+    }
+
     if (labelName === "User") {
       navigate("/admin/user-management/new-user");
     } else if (labelName === "Role") {
@@ -69,7 +78,6 @@ function Header({ labelName }: { labelName: string }) {
   useEffect(() => {
     const timer = setTimeout(() => {
       if (tabValue === 0) {
-        console.log("searchValue", searchValue);
         setUserSearch(searchValue);
       } else if (tabValue === 1) {
         setRoleSearch(searchValue);

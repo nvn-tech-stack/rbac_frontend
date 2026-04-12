@@ -132,7 +132,7 @@ const Signup = () => {
             {!isLogin ? "Sign up" : "Log in"}
           </Typography>
 
-          <Typography align="center" sx={{ mt: 1, mb: 3 }}>
+          <Typography align="center" sx={{ mt: 1, mb: 3, cursor: "pointer" }}>
             Already have an account?{" "}
             <Link onClick={handleLogin}>{!isLogin ? "Log in" : "Sign up"}</Link>
           </Typography>

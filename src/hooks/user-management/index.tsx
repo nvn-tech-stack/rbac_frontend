@@ -69,7 +69,7 @@ export const useUserManagementProvider = () => {
   const [roleSearch, setRoleSearch] = useState("");
   const [userSearch, setUserSearch] = useState("");
 
-  console.log("userSearch", userSearch, "roleSearch", roleSearch);
+  
 
   const showToast = useToast();
 
