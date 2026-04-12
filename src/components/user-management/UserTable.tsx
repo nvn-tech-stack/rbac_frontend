@@ -89,7 +89,11 @@ export default function UserTable({
                   <TableCell>
                     <span style={getStatusStyle(row.status)}>{row.status}</span>
                   </TableCell>
-                  <TableCell>{row?.role?.name}</TableCell>
+                  <TableCell>
+                    {row?.role?.name === "Admin"
+                      ? "Admin(Owner)"
+                      : row?.role?.name}
+                  </TableCell>
                   <TableCell>
                     {fullDateTimeFormat(row?.last_sign_in) || "-"}
                   </TableCell>
@@ -112,17 +116,18 @@ export default function UserTable({
                           ),
                       )}
 
-                    {roleInfo?.type === "admin" && roleInfo?.name === "Admin" && (
-                      <>
-                        <HiDotsVertical
-                          onClick={(e) => handleClickUserMenu(e, row)}
-                          style={{
-                            fontSize: 20,
-                            cursor: "pointer",
-                          }}
-                        />
-                      </>
-                    )}
+                    {roleInfo?.type === "admin" &&
+                      roleInfo?.name === "Admin" && (
+                        <>
+                          <HiDotsVertical
+                            onClick={(e) => handleClickUserMenu(e, row)}
+                            style={{
+                              fontSize: 20,
+                              cursor: "pointer",
+                            }}
+                          />
+                        </>
+                      )}
                   </TableCell>
                 </TableRow>
               ))

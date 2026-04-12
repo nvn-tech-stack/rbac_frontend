@@ -170,6 +170,8 @@ export default function CreateUserAndUpdate() {
 
   const allowedRoles = ["Admin"];
 
+  console.log("user roles", roles);
+
   return (
     <div>
       <BoxContainer>
@@ -340,7 +342,10 @@ export default function CreateUserAndUpdate() {
                       </MenuItem>
                       {roles && roles.length > 0
                         ? roles
-                            .filter((d) => d.status === "active")
+                            .filter(
+                              (d) =>
+                                d.name !== "Admin" && d.status === "active",
+                            )
                             .map((role) => (
                               <MenuItem key={role._id} value={role._id}>
                                 {role.name}
