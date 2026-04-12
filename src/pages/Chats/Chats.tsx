@@ -66,7 +66,7 @@ export default function Chats() {
                   }}
                   variant="body2"
                 >
-                  Manish Gupta
+                  Me
                 </Typography>
                 <Box
                   sx={{
@@ -147,7 +147,7 @@ export default function Chats() {
                   }}
                   variant="body2"
                 >
-                  Manish Gupta
+                  Me
                 </Typography>
                 <Box
                   sx={{
@@ -350,7 +350,7 @@ export default function Chats() {
                   }}
                   variant="body2"
                 >
-                  Manish Gupta
+                  Me
                 </Typography>
                 <Box
                   sx={{
@@ -431,7 +431,7 @@ export default function Chats() {
                   }}
                   variant="body2"
                 >
-                  Manish Gupta
+                  Me
                 </Typography>
                 <Box
                   sx={{
