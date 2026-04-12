@@ -37,7 +37,7 @@ export const useAuthProvider = () => {
 
       setToken({ access_token: accessToken, refresh_token: refreshToken });
       const userData = data?.results?.user;
-      console.log("AuthContextProvider userData", userData);
+
       setLsUser(userData);
       setUser(userData);
       navigate("/admin", { replace: true });
