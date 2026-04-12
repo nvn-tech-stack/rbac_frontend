@@ -51,7 +51,7 @@ export default function RoleTable() {
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
-      <TableContainer sx={{ maxHeight: 570 }}>
+      <TableContainer sx={{ maxHeight: 500 }}>
         <Table stickyHeader>
           <TableHead>
             <TableRow>
