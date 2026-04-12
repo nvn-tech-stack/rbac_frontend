@@ -237,7 +237,7 @@ export default function Chats() {
                 </Typography>
                 <Box
                   sx={{
-                     background: "#f5f5f5",
+                    background: "#f5f5f5",
                     padding: "15px 20px",
                     borderRadius: "12px",
                   }}
@@ -479,8 +479,6 @@ export default function Chats() {
                 />
               </Box>
             </Box>
-
-          
           </MidContainer>
           <Box
             sx={{
@@ -491,6 +489,8 @@ export default function Chats() {
           >
             <TextField
               placeholder="Chats..."
+              multiline
+              maxRows={3}
               sx={{
                 "& .MuiOutlinedInput-root": {
                   borderRadius: "30px",
@@ -503,7 +503,12 @@ export default function Chats() {
                 "&:hover fieldset": {
                   border: "none",
                 },
-                width: "50%",
+                width: {
+                  xs: "100%",
+                  sm: "80%",
+                  md: "50%",
+                },
+                overflowY: "auto",
                 outline: "none",
               }}
               slotProps={{
