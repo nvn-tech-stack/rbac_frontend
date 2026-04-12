@@ -15,8 +15,6 @@ const BoxContainer = styled(Box)({
   width: "100%",
   marginTop: 20,
   padding: "10px",
-  height: "100vh",
-  background: "#e2e6e7",
 });
 
 const ChatsContainer = styled(Box)({
