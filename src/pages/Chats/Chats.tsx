@@ -27,7 +27,7 @@ const ChatsContainer = styled(Box)({
 });
 
 const MidContainer = styled(Box)({
-  height: "500px",
+  height: "550px",
   width: "100%",
   overflowY: "auto",
 
