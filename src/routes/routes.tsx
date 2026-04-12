@@ -14,6 +14,7 @@ import UserManagement from "../pages/Admin/UserManagement";
 
 import CreateRoleAndUpdate from "../components/user-management/CreateRoleAndUpdate";
 import CreateUserAndUpdate from "../components/user-management/CreateUserAndUpdate";
+import Chats from "../pages/Chats/Chats";
 
 const OauthRedirect = () => {
   const { provider, user } = useParams();
@@ -97,7 +98,7 @@ export const adminRoutes = [
     id: 6,
     name: "chats",
     path: "chats",
-    element: <h1 style={{ marginTop: "15px" }}>Comming soon users chats</h1>,
+    element: <Chats />,
   },
   {
     id: 7,

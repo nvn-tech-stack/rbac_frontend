@@ -157,6 +157,7 @@ export default function CreateUserAndUpdate() {
 
   useEffect(() => {
     if (userId && userInfo) {
+      
       reset({
         first_name: userInfo.first_name,
         last_name: userInfo.last_name,
@@ -169,8 +170,7 @@ export default function CreateUserAndUpdate() {
   }, [userId, userInfo, reset]);
 
   const allowedRoles = ["Admin"];
-
-  console.log("user roles", roles);
+ 
 
   return (
     <div>
@@ -342,10 +342,7 @@ export default function CreateUserAndUpdate() {
                       </MenuItem>
                       {roles && roles.length > 0
                         ? roles
-                            .filter(
-                              (d) =>
-                                d.name !== "Admin" && d.status === "active",
-                            )
+                            .filter((d) => d.status === "active")
                             .map((role) => (
                               <MenuItem key={role._id} value={role._id}>
                                 {role.name}

@@ -138,8 +138,6 @@ export default function CreateRoleAndUpdate() {
 
   const actions = ["view", "edit", "create", "delete"];
 
-  console.log("role data ---->", role?.results);
-
   const handleRoleFormSubmit = (data: FormValues) => {
     const formattedData = {
       name: data.roleName,
@@ -155,10 +153,7 @@ export default function CreateRoleAndUpdate() {
       })),
     };
 
-    console.log("formattedData ----> outside", formattedData);
-
     if (isUpdate) {
-      console.log("formattedData ----> update inside", formattedData);
       mumtateUpdateRole(
         { data: formattedData, id: roleId },
         {
@@ -176,7 +171,6 @@ export default function CreateRoleAndUpdate() {
         },
       );
     } else {
-      console.log("formattedData ----> create inside", formattedData);
       mumtateCreateRole(
         { data: formattedData },
         {
