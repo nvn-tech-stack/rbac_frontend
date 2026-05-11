@@ -32,6 +32,7 @@ const useNotificationProvider = () => {
       }
     },
     enabled: !!user?._id,
+    refetchInterval: 1000,
   });
 
   const { mutate: updateNotification } = useMutation({
