@@ -69,6 +69,8 @@ function NotificationModal({
                   description={notification.description}
                   createdAt={notification.createdAt}
                   userName={notification.user?.first_name}
+                  notificationType={notification?.notification_type?.type}
+                  handleCloseNotification={handleCloseNotification}
                 />
               ))
             ) : (

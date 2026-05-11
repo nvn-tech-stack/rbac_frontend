@@ -1,6 +1,7 @@
 import { Card, Box, Typography, Avatar } from "@mui/material";
 import { formatDistanceToNow } from "date-fns";
 import { useNotification } from "../hooks/notification";
+import { useNavigate } from "react-router-dom";
 
 type NotificationCardProps = {
   notificatonRead: boolean;
@@ -9,6 +10,8 @@ type NotificationCardProps = {
   description: string;
   createdAt: string;
   userName: string;
+  notificationType: string;
+  handleCloseNotification: () => void;
 };
 
 const NotificationCard = ({
@@ -17,15 +20,26 @@ const NotificationCard = ({
   createdAt,
   userName,
   id,
+  notificationType,
+  handleCloseNotification,
 }: NotificationCardProps) => {
   const notificationTime = formatDistanceToNow(new Date(createdAt), {
     addSuffix: true,
   });
   const { handleReadNotifications } = useNotification();
+  const navigate = useNavigate();
+
+  const handleClick = async (id: string) => {
+    await handleReadNotifications(id);
+    if (notificationType === "Chats") {
+      navigate("/admin/Chats");
+    }
+    handleCloseNotification();
+  };
 
   return (
     <Card
-      onClick={() => handleReadNotifications(id)}
+      onClick={() => handleClick(id)}
       sx={{
         p: 2,
         mb: 1.5,
