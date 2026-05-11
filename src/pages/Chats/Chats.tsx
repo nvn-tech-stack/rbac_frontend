@@ -136,72 +136,63 @@ export default function Chats() {
       <BoxContainer>
         <ChatsContainer>
           <Box className="top-header"></Box>
-          <MidContainer>
-            {chats.length > 0 &&
-              chats?.map((chat) => {
-                const isMe = chat.created_by._id === user?._id;
 
-                return (
-                  <Box
-                    key={chat._id}
-                    sx={{
-                      display: "flex",
-                      justifyContent: isMe ? "flex-end" : "flex-start",
-                    }}
-                  >
-                    {!isMe && (
-                      <Box
-                        sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          margin: 1,
-                        }}
-                      >
-                        {!chat.is_deleted && isMe && (
-                          <>
-                            <HiDotsVertical
-                              style={{
-                                fontSize: "25px",
-                                cursor: "pointer",
-                              }}
-                            />
-                          </>
-                        )}
-                        <Avatar sx={{ width: 25, height: 25 }} />
-                      </Box>
-                    )}
+          {chats.length > 0 ? (
+            <MidContainer>
+              {chats.length > 0 &&
+                chats?.map((chat) => {
+                  const isMe = chat.created_by._id === user?._id;
 
+                  return (
                     <Box
+                      key={chat._id}
                       sx={{
                         display: "flex",
-                        flexDirection: "column",
-                        maxWidth: "50%",
-                        marginTop: !isMe ? 1 : 0.5,
+                        justifyContent: isMe ? "flex-end" : "flex-start",
                       }}
                     >
-                      <Typography
-                        sx={{
-                          fontSize: 10,
-                          display: "flex",
-                          justifyContent: isMe ? "flex-end" : "flex-start",
-                        }}
-                      >
-                        {isMe
-                          ? "Me"
-                          : `${chat.created_by?.first_name} ${chat.created_by?.last_name || ""}`}
-                      </Typography>
+                      {!isMe && (
+                        <Box
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            margin: 1,
+                          }}
+                        >
+                          {!chat.is_deleted && isMe && (
+                            <>
+                              <HiDotsVertical
+                                style={{
+                                  fontSize: "25px",
+                                  cursor: "pointer",
+                                }}
+                              />
+                            </>
+                          )}
+                          <Avatar sx={{ width: 25, height: 25 }} />
+                        </Box>
+                      )}
 
                       <Box
                         sx={{
-                          backgroundColor: chat.is_deleted
-                            ? "#ef7474"
-                            : isMe
-                              ? "#c5faba"
-                              : "#f5f5f5",
-                          padding: "5px 10px",
-                          borderRadius: "12px",
+                          display: "flex",
+                          flexDirection: "column",
+                          maxWidth: "50%",
+                          marginTop: !isMe ? 1 : 0.5,
                         }}
                       >
+                        <Typography
+                          sx={{
+                            fontSize: 10,
+                            display: "flex",
+                            justifyContent: isMe ? "flex-end" : "flex-start",
+                          }}
+                        >
+                          {isMe
+                            ? "Me"
+                            : `${chat.created_by?.first_name} ${chat.created_by?.last_name || ""}`}
+                        </Typography>
+
                         <Box
                           sx={{
                             backgroundColor: chat.is_deleted
@@ -213,129 +204,150 @@ export default function Chats() {
                             borderRadius: "12px",
                           }}
                         >
-                          {chat.is_deleted ? (
-                            <Typography sx={{ color: "white" }}>
-                              This message was deleted
-                            </Typography>
-                          ) : (
-                            chat.messages.map((msg) => {
-                              if (msg.type === "text") {
-                                return (
-                                  <Typography
-                                    key={msg._id}
-                                    component="span"
-                                    sx={{ color: "black", mr: 0.5 }}
-                                  >
-                                    {msg.message}
-                                  </Typography>
-                                );
-                              } else if (msg.type === "mention") {
-                                return (
-                                  <Typography
-                                    key={msg._id}
-                                    component="span"
-                                    sx={{
-                                      color: "blue",
-                                      fontWeight: 500,
-                                      mr: 0.5,
-                                      backgroundColor: "#e6f0ff",
-                                    }}
-                                  >
-                                    @{msg.tag_name}
-                                  </Typography>
-                                );
-                              } else if (msg.type === "file") {
-                                return (
-                                  <Box key={msg._id} sx={{ mt: 1 }}>
-                                    <img
-                                      src={msg.file?.url}
-                                      alt="img"
-                                      style={{
-                                        maxWidth: "200px",
-                                        borderRadius: "8px",
-                                        display: "block",
-                                      }}
-                                    />
-                                    <Box
-                                      onClick={() =>
-                                        handleDownload(msg.file?.url)
-                                      }
+                          <Box
+                            sx={{
+                              backgroundColor: chat.is_deleted
+                                ? "#ef7474"
+                                : isMe
+                                  ? "#c5faba"
+                                  : "#f5f5f5",
+                              padding: "5px 10px",
+                              borderRadius: "12px",
+                            }}
+                          >
+                            {chat.is_deleted ? (
+                              <Typography sx={{ color: "white" }}>
+                                This message was deleted
+                              </Typography>
+                            ) : (
+                              chat.messages.map((msg) => {
+                                if (msg.type === "text") {
+                                  return (
+                                    <Typography
+                                      key={msg._id}
+                                      component="span"
+                                      sx={{ color: "black", mr: 0.5 }}
+                                    >
+                                      {msg.message}
+                                    </Typography>
+                                  );
+                                } else if (msg.type === "mention") {
+                                  return (
+                                    <Typography
+                                      key={msg._id}
+                                      component="span"
                                       sx={{
-                                        display: "flex",
-                                        alignItems: "center",
-                                        gap: "6px",
-                                        px: 1.2,
-                                        py: 0.7,
-                                        borderRadius: "8px",
-                                        width: "fit-content",
-                                        color: "#333",
-                                        fontSize: "14px",
-                                        cursor: "pointer",
+                                        color: "blue",
+                                        fontWeight: 500,
+                                        mr: 0.5,
+                                        backgroundColor: "#e6f0ff",
                                       }}
                                     >
-                                      <MdOutlineFileDownload size={18} />
-                                      {getCleanFileName(
-                                        msg.file?.file_name || "Download file",
-                                      )}
+                                      @{msg.tag_name}
+                                    </Typography>
+                                  );
+                                } else if (msg.type === "file") {
+                                  return (
+                                    <Box key={msg._id} sx={{ mt: 1 }}>
+                                      <img
+                                        src={msg.file?.url}
+                                        alt="img"
+                                        style={{
+                                          maxWidth: "200px",
+                                          borderRadius: "8px",
+                                          display: "block",
+                                        }}
+                                      />
+                                      <Box
+                                        onClick={() =>
+                                          handleDownload(msg.file?.url)
+                                        }
+                                        sx={{
+                                          display: "flex",
+                                          alignItems: "center",
+                                          gap: "6px",
+                                          px: 1.2,
+                                          py: 0.7,
+                                          borderRadius: "8px",
+                                          width: "fit-content",
+                                          color: "#333",
+                                          fontSize: "14px",
+                                          cursor: "pointer",
+                                        }}
+                                      >
+                                        <MdOutlineFileDownload size={18} />
+                                        {getCleanFileName(
+                                          msg.file?.file_name ||
+                                            "Download file",
+                                        )}
+                                      </Box>
                                     </Box>
-                                  </Box>
-                                );
-                              }
-                              return null;
-                            })
+                                  );
+                                }
+                                return null;
+                              })
+                            )}
+                          </Box>
+                        </Box>
+
+                        <Typography
+                          sx={{
+                            fontSize: 10,
+                            display: "flex",
+                            justifyContent: isMe ? "flex-end" : "flex-start",
+                          }}
+                        >
+                          {twelveHourTimeFormat(chat.createdAt)}
+                        </Typography>
+                      </Box>
+
+                      {isMe && (
+                        <Box
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            margin: 1,
+                          }}
+                        >
+                          <Avatar sx={{ width: 25, height: 25 }} />
+                          {!chat.is_deleted && isMe && (
+                            <>
+                              <HiDotsVertical
+                                style={{
+                                  fontSize: "25px",
+                                  cursor: "pointer",
+                                }}
+                                onClick={(e: any) => {
+                                  handleOpenMenu(e, chat);
+                                }}
+                              />
+                              {chatId && (
+                                <ChatMenuButton
+                                  anchorEl={menuAnchorEl}
+                                  handleCloseMenu={handleCloseMenu}
+                                  chatId={chatId}
+                                  editMessage={editMessage}
+                                  handleEditMessage={handleEditMessage}
+                                />
+                              )}
+                            </>
                           )}
                         </Box>
-                      </Box>
-
-                      <Typography
-                        sx={{
-                          fontSize: 10,
-                          display: "flex",
-                          justifyContent: isMe ? "flex-end" : "flex-start",
-                        }}
-                      >
-                        {twelveHourTimeFormat(chat.createdAt)}
-                      </Typography>
+                      )}
                     </Box>
-
-                    {isMe && (
-                      <Box
-                        sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          margin: 1,
-                        }}
-                      >
-                        <Avatar sx={{ width: 25, height: 25 }} />
-                        {!chat.is_deleted && isMe && (
-                          <>
-                            <HiDotsVertical
-                              style={{
-                                fontSize: "25px",
-                                cursor: "pointer",
-                              }}
-                              onClick={(e: any) => {
-                                handleOpenMenu(e, chat);
-                              }}
-                            />
-                            {chatId && (
-                              <ChatMenuButton
-                                anchorEl={menuAnchorEl}
-                                handleCloseMenu={handleCloseMenu}
-                                chatId={chatId}
-                                editMessage={editMessage}
-                                handleEditMessage={handleEditMessage}
-                              />
-                            )}
-                          </>
-                        )}
-                      </Box>
-                    )}
-                  </Box>
-                );
-              })}
-            <div ref={bottomScroll} />
-          </MidContainer>
+                  );
+                })}
+              <div ref={bottomScroll} />
+            </MidContainer>
+          ) : (
+            <MidContainer>
+               <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
+                <Typography sx={{ textAlign: "center", color: "#888", fontSize: 25,fontWeight: "bold" }}>
+                  No messages yet. Start the conversation!
+                </Typography>
+               </Box>
+            </MidContainer>
+          )}
 
           <ChatWithMentionInput
             editMessage={editMessage}

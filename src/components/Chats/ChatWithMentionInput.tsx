@@ -367,6 +367,7 @@ const ChatWithMentionInput = ({
             onInput={handleInput}
             suppressContentEditableWarning
             onKeyDown={handleKeyDown}
+            data-placeholder="Type a message or use @ to mention someone…"
             sx={{
               outline: "none",
               minHeight: 30,
@@ -376,6 +377,11 @@ const ChatWithMentionInput = ({
               wordBreak: "break-word",
               flex: 1,
               paddingTop: 0.5,
+              "&:empty:before": {
+                content: "attr(data-placeholder)",
+                color: "gray",
+                pointerEvents: "none",
+              },
             }}
           />
 
