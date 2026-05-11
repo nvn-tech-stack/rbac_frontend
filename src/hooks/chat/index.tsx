@@ -53,7 +53,7 @@ const useChatProvider = () => {
     queryKey: ["chats", user?._id],
     queryFn: list,
     enabled: !!user?._id,
-    refetchInterval: 1000,
+    refetchInterval: 3000,
   });
 
   const chatsLists = data?.results?.chats ?? [];
