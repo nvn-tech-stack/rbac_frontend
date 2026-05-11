@@ -3,6 +3,7 @@ import { useAuth } from "../auth";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { create, list, remove, update } from "../../services/chat";
 import type { Chat } from "../../utils/interfaces";
+import { useLocation } from "react-router-dom";
 
 type ChatType = {
   chats: Chat[];
@@ -17,6 +18,11 @@ const ChatContext = createContext<ChatType | null>(null);
 const useChatProvider = () => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
+  const location = useLocation();
+
+  const onChatPage = location.pathname === "/admin/Chats";
+
+  console.log("onChatPage", onChatPage, location.pathname);
 
   const { mutate: mutateCreateMessage } = useMutation({
     mutationKey: ["chats"],
@@ -52,7 +58,7 @@ const useChatProvider = () => {
   const { data, isLoading: isChatsLoading } = useQuery({
     queryKey: ["chats", user?._id],
     queryFn: list,
-    enabled: !!user?._id,
+    enabled: !!user?._id && onChatPage,
     refetchInterval: 3000,
   });
 
