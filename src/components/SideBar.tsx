@@ -127,6 +127,7 @@ const Sidebar = ({ open, toggleDrawer, user }: SidebarProps) => {
                     )}
                   </ButtonStyled>
                 </Link>
+
                 <Link
                   to="Chats"
                   style={{ textDecoration: "none", color: "inherit" }}
@@ -157,11 +158,14 @@ const Sidebar = ({ open, toggleDrawer, user }: SidebarProps) => {
 
           {modulePermissions &&
             modulePermissions.length > 0 &&
-            modulePermissions.map((perm: any) => {
-              return (
-                <>
-                  {perm.is_view && perm.module.name === "User Management" && (
+            modulePermissions
+              .filter((perm: any) => perm.is_view)
+              .reverse()
+              .map((perm: any) => {
+                if (perm.module.name === "User Management") {
+                  return (
                     <Link
+                      key="user-management"
                       to="user-management"
                       style={{ textDecoration: "none", color: "inherit" }}
                     >
@@ -186,10 +190,13 @@ const Sidebar = ({ open, toggleDrawer, user }: SidebarProps) => {
                         )}
                       </ButtonStyled>
                     </Link>
-                  )}
+                  );
+                }
 
-                  {perm.is_view && perm.module.name === "Chats" && (
+                if (perm.module.name === "Chats") {
+                  return (
                     <Link
+                      key="chats"
                       to="Chats"
                       style={{ textDecoration: "none", color: "inherit" }}
                     >
@@ -214,10 +221,11 @@ const Sidebar = ({ open, toggleDrawer, user }: SidebarProps) => {
                         )}
                       </ButtonStyled>
                     </Link>
-                  )}
-                </>
-              );
-            })}
+                  );
+                }
+
+                return null;
+              })}
         </List>
       </Box>
 
