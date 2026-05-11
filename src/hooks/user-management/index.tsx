@@ -8,6 +8,7 @@ import {
   ResendEmail,
   updateUserById,
   userList,
+  userTags,
 } from "../../services/user";
 
 import {
@@ -50,8 +51,10 @@ type UserManagementContextType = {
   SetuserqFilter: any;
   setRoleSearch: any;
   setUserSearch: any;
-  modulePermissions:Permission[];
+  modulePermissions: Permission[];
   roleInfo: Role;
+  userTagsData: any[];
+  isTagsLoading: boolean;
 };
 
 const UserManagementContext = createContext<UserManagementContextType | null>(
@@ -68,8 +71,6 @@ export const useUserManagementProvider = () => {
   const [userqFilter, SetuserqFilter] = useState({});
   const [roleSearch, setRoleSearch] = useState("");
   const [userSearch, setUserSearch] = useState("");
-
-  
 
   const showToast = useToast();
 
@@ -235,6 +236,11 @@ export const useUserManagementProvider = () => {
     queryFn: () => getModules({ params: { type: "admin" } }),
   });
 
+  const { data: userTagsData = [], isLoading: isTagsLoading } = useQuery({
+    queryKey: ["tags", user?._id],
+    queryFn: userTags,
+  });
+
   const totalsRoleResults = roles?.results?.pagination.totalResults || 0;
 
   return {
@@ -269,6 +275,8 @@ export const useUserManagementProvider = () => {
     setUserSearch,
     modulePermissions,
     roleInfo,
+    userTagsData: userTagsData?.results?.tags || [],
+    isTagsLoading,
   };
 };
 

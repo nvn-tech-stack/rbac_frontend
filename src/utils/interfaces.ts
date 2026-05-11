@@ -47,3 +47,23 @@ export interface Permission {
   is_delete: boolean;
   is_create: boolean;
 }
+
+export interface Chat {
+  id: string;
+  _id: string;
+  messages: any[];
+
+  is_deleted: boolean;
+
+  created_by: {
+    _id: string;
+    first_name: string;
+    last_name: string;
+  };
+  tag: {
+    _id: string;
+    first_name: string;
+    last_name: string;
+  };
+  createdAt: Date;
+}

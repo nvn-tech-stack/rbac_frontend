@@ -25,3 +25,7 @@ export const updateUserById = async (id: string, config: any) => {
 export const ResendEmail = async (config: any) => {
   return await postApi(`${API.auth}/resend-email`, config);
 };
+
+export const userTags = async () => {
+  return await getApi(`${API.user}/tags`);
+};

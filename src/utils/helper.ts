@@ -53,3 +53,8 @@ export const timeFormat = (date: any) => {
   if (!date) return "-";
   return format(new Date(date), "HH:mm:ss");
 };
+
+export const twelveHourTimeFormat = (date: any) => {
+  if (!date) return "-";
+  return format(new Date(date), "hh:mm a");
+};

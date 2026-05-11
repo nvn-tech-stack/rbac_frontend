@@ -4,6 +4,7 @@ import { NotificationProvider } from "../hooks/notification";
 
 import { UserManagementProvider } from "../hooks/user-management";
 import type { ReactNode } from "react";
+import { ChatProviderContext } from "../hooks/chat";
 
 type props = {
   children: ReactNode;
@@ -15,7 +16,9 @@ export default function ContextContainer({ children }: props) {
       <ToastProvider>
         <AuthContextProvider>
           <NotificationProvider>
-            <UserManagementProvider>{children}</UserManagementProvider>
+            <UserManagementProvider>
+              <ChatProviderContext>{children}</ChatProviderContext>
+            </UserManagementProvider>
           </NotificationProvider>
         </AuthContextProvider>
       </ToastProvider>
